@@ -11,8 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@a14471d838f6a7ce15cab8740f25e337c51e7cad
       - uses: ./actions/dockerhub/
-        with:
-          args: -f ./scripts/DockerfileNode .
         env:
           DOCKER_NAMESPACE: afragapane
           DOCKER_IMAGE_NAME: test-repo
