@@ -18,6 +18,7 @@ IMAGE_TAG = ${image_tag_tmp//@/}
 NAMESPACE=${DOCKER_NAMESPACE:-$USERNAME} ## use github username as docker namespace unless specified
 IMAGE_NAME=${DOCKER_IMAGE_NAME:-$REPOSITORY} ## use github repository name as docker image name unless specified
 REGISTRY_IMAGE="$DOCKER_NAMESPACE/$IMAGE_NAME"
+echo image_tag_tmp: $image_tag_tmp
 echo IMAGE_TAG: $IMAGE_TAG
 echo NAMESPACE: $NAMESPACE
 echo IMAGE_NAME: $IMAGE_NAME
