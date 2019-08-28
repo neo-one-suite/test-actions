@@ -27,7 +27,7 @@ echo REGISTRY_IMAGE: $REGISTRY_IMAGE
 ## login if needed
 if [ -n "${DOCKER_PASSWORD+set}" ]
 then
-  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password_stdin
 fi
 
 ## build the image locally
