@@ -16,7 +16,7 @@ echo ref_tmp: $ref_tmp
 IMAGE_TAG=${ref_value//\//-} ## replace `/` with `-` in ref for docker tag requirement (master or 2019-03-13)
 NAMESPACE=${DOCKER_NAMESPACE:-$USERNAME} ## use github username as docker namespace unless specified
 IMAGE_NAME=${DOCKER_IMAGE_NAME:-$REPOSITORY} ## use github repository name as docker image name unless specified
-REGISTRY_IMAGE="$NAMESPACE/$IMAGE_NAME"
+REGISTRY_IMAGE="$DOCKER_NAMESPACE/$IMAGE_NAME"
 echo IMAGE_TAG: $IMAGE_TAG
 echo NAMESPACE: $NAMESPACE
 echo IMAGE_NAME: $IMAGE_NAME
