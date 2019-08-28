@@ -13,7 +13,8 @@ ref_value=${ref_tmp#*/} ## extract the third+ elements of the ref (master or 201
 echo GITHUB_REF: $GITHUB_REF
 echo ref_tmp: $ref_tmp
 
-IMAGE_TAG=${ref_value//\//-} ## replace `/` with `-` in ref for docker tag requirement (master or 2019-03-13)
+image_tmp=${ref_value//\//-} ## replace `/` with `-` in ref for docker tag requirement (master or 2019-03-13)
+IMAGE_TAG = $image_tmp
 NAMESPACE=${DOCKER_NAMESPACE:-$USERNAME} ## use github username as docker namespace unless specified
 IMAGE_NAME=${DOCKER_IMAGE_NAME:-$REPOSITORY} ## use github repository name as docker image name unless specified
 REGISTRY_IMAGE="$DOCKER_NAMESPACE/$IMAGE_NAME"
