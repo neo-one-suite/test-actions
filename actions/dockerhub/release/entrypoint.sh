@@ -26,7 +26,7 @@ docker build -t $IMAGE_NAME ${*:-.} ## pass in the build command from user input
 
 # push sha tagged image to the repository
 docker tag $IMAGE_NAME $REGISTRY_IMAGE:$GITHUB_REF
-docker push $REGISTRY_IMAGE:$SHA_TAG
+docker push $REGISTRY_IMAGE:$GITHUB_REF
 
 # push latest tagged image to the repository
 docker tag $IMAGE_NAME $REGISTRY_IMAGE:$LATEST_TAG
