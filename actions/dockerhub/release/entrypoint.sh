@@ -16,6 +16,7 @@ echo ref_type: $ref_type
 echo ref_value: $ref_value
 
 LATEST_TAG=latest
+IMAGE_TAG=${ref_value:1}
 IMAGE_NAME=${DOCKER_IMAGE_NAME:-$REPOSITORY} ## use github repository name as docker image name unless specified
 REGISTRY_IMAGE="$DOCKER_NAMESPACE/$IMAGE_NAME"
 echo IMAGE_NAME: $IMAGE_NAME
