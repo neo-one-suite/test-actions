@@ -16,10 +16,8 @@ echo ref_type: $ref_type
 echo ref_value: $ref_value
 
 LATEST_TAG=latest
-NAMESPACE=${DOCKER_NAMESPACE:-$USERNAME} ## use github username as docker namespace unless specified
 IMAGE_NAME=${DOCKER_IMAGE_NAME:-$REPOSITORY} ## use github repository name as docker image name unless specified
-REGISTRY_IMAGE="$NAMESPACE/$IMAGE_NAME"
-echo NAMESPAACE: $NAMESPACE
+REGISTRY_IMAGE="$DOCKER_NAMESPACE/$IMAGE_NAME"
 echo IMAGE_NAME: $IMAGE_NAME
 echo REGISTRY_IMAGE: $REGISTRY_IMAGE
 
