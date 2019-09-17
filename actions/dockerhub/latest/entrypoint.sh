@@ -31,7 +31,7 @@ docker tag $DOCKER_IMAGE_NAME $REGISTRY_IMAGE:$LATEST_TAG
 docker push $REGISTRY_IMAGE:$LATEST_TAG
 
 # if releasing, push image tagged with tag
-if [ "${ref_value}" = *"node-bin"* ]
+if [[ $ref_value == *"node-bin"* ]]
 then
   RELEASE_TAG=${ref_value//\//-} ## replace `/` with `-`
   RELEASE_TAG=${RELEASE_TAG//\@/v} ## replace `@` with `v`
