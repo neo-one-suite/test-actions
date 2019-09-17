@@ -1,0 +1,15 @@
+name: Push DockerHub Node
+on:
+  release:
+    types: [published]
+jobs:
+  push:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@a14471d838f6a7ce15cab8740f25e337c51e7cad
+      - uses: ./actions/dockerhub/
+        env:
+          DOCKER_NAMESPACE: afragapane
+          DOCKER_IMAGE_NAME: test-repo
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
