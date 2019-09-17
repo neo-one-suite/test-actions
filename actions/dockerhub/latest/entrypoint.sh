@@ -2,15 +2,11 @@
 
 set -u -e -o pipefail
 
-## mapping of var from user input or default value
-
 USERNAME=${GITHUB_REPOSITORY%%/*}
 REPOSITORY=${GITHUB_REPOSITORY#*/}
 
-SHA_TAG=${GITHUB_SHA:0:7}
 LATEST_TAG=latest
-REGISTRY_IMAGE="$DOCKER_NAMESPACE/$IMAGE_NAME"
-echo IMAGE_NAME: $IMAGE_NAME
+REGISTRY_IMAGE="$DOCKER_NAMESPACE/$DOCKER_IMAGE_NAME"
 echo REGISTRY_IMAGE: $REGISTRY_IMAGE
 
 ## login if needed
@@ -22,10 +18,33 @@ fi
 ## build the image locally
 docker build -t $DOCKER_IMAGE_NAME ${*:-.} ## pass in the build command from user input, otherwise build in default mode
 
-# push sha tagged image to the repository
-docker tag $DOCKER_IMAGE_NAME $REGISTRY_IMAGE:$SHA_TAG
-docker push $REGISTRY_IMAGE:$SHA_TAG
-
 # push latest tagged image to the repository
 docker tag $DOCKER_IMAGE_NAME $REGISTRY_IMAGE:$LATEST_TAG
 docker push $REGISTRY_IMAGE:$LATEST_TAG
+
+# if releasing, push image tagged with tag
+if [ "${ref_value}" = *"node-bin"* ]
+then
+  ref_tmp=${GITHUB_REF#*/} ## throw away the first part of the ref (GITHUB_REF=refs/heads/master or refs/tags/2019/03/13)
+  ref_type=${ref_tmp%%/*} ## extract the second element of the ref (heads or tags)
+  ref_value=${ref_tmp#*/} ## extract the third+ elements of the ref (master or 2019/03/13)
+  echo GITHUB_REF: $GITHUB_REF
+  echo ref_tmp: $ref_tmp
+  echo ref_type: $ref_type
+  echo ref_value: $ref_value
+
+  RELEASE_TAG=${ref_value//\//-} ## replace `/` with `-`
+  RELEASE_TAG=${RELEASE_TAG//\@/v} ## replace `@` with `v`
+  RELEASE_TAG=${RELEASE_TAG:1}
+  echo RELEASE_TAG: $RELEASE_TAG
+
+  docker tag $IMAGE_NAME $REGISTRY_IMAGE:$RELEASE_TAG
+  docker push $REGISTRY_IMAGE:$RELEASE_TAG
+else
+  # push sha tagged image to the repository
+  SHA_TAG=${GITHUB_SHA:0:7}
+  echo SHA_TAG: $SHA_TAG
+  
+  docker tag $DOCKER_IMAGE_NAME $REGISTRY_IMAGE:$SHA_TAG
+  docker push $REGISTRY_IMAGE:$SHA_TAG
+fi
