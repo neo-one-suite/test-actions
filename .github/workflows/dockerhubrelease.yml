@@ -1,5 +1,7 @@
 name: Release Dockerhub Node
-on: [release]
+on:
+  release:
+    types: [created]
 jobs:
   push:
     runs-on: ubuntu-18.04
