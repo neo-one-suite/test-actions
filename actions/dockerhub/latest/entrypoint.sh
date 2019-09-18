@@ -4,7 +4,6 @@ set -u -e -o pipefail
 
 USERNAME=${GITHUB_REPOSITORY%%/*}
 REPOSITORY=${GITHUB_REPOSITORY#*/}
-NEO_ONE_NODE_BIN="@neo-one/node-bin"
 
 ref_tmp=${GITHUB_REF#*/} ## throw away the first part of the ref (GITHUB_REF=refs/heads/master or refs/tags/2019/03/13)
 ref_type=${ref_tmp%%/*} ## extract the second element of the ref (heads or tags)
@@ -31,9 +30,9 @@ docker build -t $DOCKER_IMAGE_NAME ${*:-.} ## pass in the build command from use
 docker tag $DOCKER_IMAGE_NAME $REGISTRY_IMAGE:$LATEST_TAG
 docker push $REGISTRY_IMAGE:$LATEST_TAG
 
-echo Checking tag matches neo-one/node-bin: "${ref_value:1:16}"
+echo Checking tag matches @neo-one/node-bin: "${ref_value:0:16}"
 # if releasing, push image tagged with tag
-if ["${ref_value:1:16}" = "neo-one/node-bin"]
+if [ "${ref_value:0:16}" = "@neo-one/node-bin"]
 then
   RELEASE_TAG=${ref_value//\//-} ## replace `/` with `-`
   RELEASE_TAG=${RELEASE_TAG//\@/v} ## replace `@` with `v`
