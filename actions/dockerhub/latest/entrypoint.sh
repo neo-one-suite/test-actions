@@ -30,6 +30,7 @@ docker build -t $DOCKER_IMAGE_NAME ${*:-.} ## pass in the build command from use
 docker tag $DOCKER_IMAGE_NAME $REGISTRY_IMAGE:$LATEST_TAG
 docker push $REGISTRY_IMAGE:$LATEST_TAG
 
+echo CHECK_HEREEEEE: "${ref_value:0:16}"
 # if releasing, push image tagged with tag
 if ["${ref_value:0:16}" = "@neo-one/node-bin"]
 then
