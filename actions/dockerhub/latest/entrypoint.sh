@@ -39,7 +39,7 @@ then
   RELEASE_TAG=${RELEASE_TAG:1}
   echo RELEASE_TAG: $RELEASE_TAG
 
-  docker tag $IMAGE_NAME $REGISTRY_IMAGE:$RELEASE_TAG
+  docker tag $DOCKER_IMAGE_NAME $REGISTRY_IMAGE:$RELEASE_TAG
   docker push $REGISTRY_IMAGE:$RELEASE_TAG
 else
   # push sha tagged image to the repository
